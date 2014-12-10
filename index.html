@@ -45,7 +45,9 @@ tt {font-weight:bold;color:#000;}
           </ul>
 
       <ul class="nav navbar-nav navbar-right">
-		<li class="pull-right"><a href="https://github.com/muayyad-alsadi">Alsadi <img class="media-object" src="http://www.gravatar.com/avatar/22b3de0ed1d200ba1e747a066fe69280?s=24" width="24" height="24" alt="avatar"></a></li>
+            <li class="pull-right me" data-refresh-url="demo/data/me.json" data-template="profile_nav_link">
+                  <a data-toggle="ajax-modal" href="demo/data/login.html">login</a>
+            </li>
       </ul>
 
         </div><!--/.nav-collapse -->
@@ -88,6 +90,14 @@ tt {font-weight:bold;color:#000;}
 				  <li><a href="#" data-url="demo/data/tweet1.html" data-toggle="ajax-load" data-target="#main-pane">tweet 1</a></li>
 				  <li><a href="#" data-url="demo/data/tweet2.html" data-toggle="ajax-load" data-target="#main-pane">tweet 2</a></li>
 			</ul>
+            </div>
+          </div>
+			<div class="panel panel-success me" data-refresh-url="demo/data/me.json" data-template="add_comment">
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title">Add comment</h3>
+            </div>
+            <div class="panel-body">
+              <p>You need to <a data-toggle="ajax-modal" href="demo/data/login.html"><b>login</b></a> to be able to comment.</p>
             </div>
           </div>
 			<div class="panel panel-danger">
@@ -165,6 +175,30 @@ You can specify selectors that matches more than one element each specifies its 
 &lt;div class="posts" data-template="posts_titles"&gt;&lt;/div&gt;
 &lt;div class="posts" data-template="full_posts"&gt;&lt;/div&gt;
 </pre>
+<section>
+<h2>Ajax Modals Magic</h2>
+<p>You can see how simple is to create rich experience using ajax-modals and modal-forms, just try the following</p>
+<ul>
+	<li>click login from nav bar or from add comment side box
+	<li>click on forgot password and note that the stacked modals
+	<li>submit fotgot password form and see how it works, close success dialog and go back to login dialog.
+	<li>click on register and note that it automatically closed the other modal.
+	<li>click on login while in register modal and note the same thing
+	<li>submit login dialog and see the failed login
+	<li>submit the failed login form and see how it successfully logged you and
+	<li>note that the success login cause the navbar login link to display avatar and the side box not also show the avatar
+</ul>
+<p>the above magic worked like this</p>
+<ul>
+	<li>any link/button with <tt>data-toggle="ajax-modal"</tt> will trigger modal pointed by "href" or "data-url"
+	<li>the content of the url will be wrapped by a &gt;div&lt; with bootstrap modal classes (can be overriden) and shown
+	<li>like register link it may be set to replace the current modal by having <tt>data-modal-attr='{"replace":1}'</tt>
+	<li>the modal form might use <tt>onsubmit="return ajax_ops.modal_form(this);"</tt> which is based on <tt>submit_form</tt> we talked about.
+	<li>you can tell it to close the modal on success by passing options to <tt>modal_form</tt>
+	<li>the response to <tt>modal_form</tt> used <tt>ajax_ops.refresh('.me');</tt> to refresh all user related elements
+	<li>the nav link and the comment side box uses the same <tt>me.json</tt> to render two different templates from the same data
+</ul>
+</section>
 <h2>Even more complex operations</h2>
 <p>
 You can use <tt>data-toggle="ajax-ops"</tt> instead of <tt>data-toggle="ajax-load"</tt>.
